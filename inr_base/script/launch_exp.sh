@@ -1,0 +1,6 @@
+python app/try_modinr_2d.py --image_size 1024 1024 --n_hidden_layers 16 --hidden_features 128 --lora_rank 9999 --mod_with_bias --n_adaptation 10 --pretrain_steps 2000 --adaptation_steps 3000 --output_dir results_cips_strainer_16
+python app/try_modinr_2d.py --image_size 1024 1024 --n_hidden_layers 12 --hidden_features 148 --lora_rank 9999 --mod_with_bias --n_adaptation 10 --pretrain_steps 2000 --adaptation_steps 3000 --output_dir results_cips_strainer_12
+python app/try_modinr_2d.py --image_size 1024 1024 --n_hidden_layers 8 --hidden_features 181 --lora_rank 9999 --mod_with_bias --n_adaptation 10 --pretrain_steps 2000 --adaptation_steps 3000 --output_dir results_cips_strainer_8
+python app/try_modinr_2d.py --image_size 1024 1024 --n_hidden_layers 6 --hidden_features 209 --lora_rank 9999 --mod_with_bias --n_adaptation 10 --pretrain_steps 2000 --adaptation_steps 3000 --output_dir results_cips_strainer_6
+python app/try_modinr_2d.py --image_size 1024 1024 --n_hidden_layers 4 --hidden_features 256 --lora_rank 9999 --mod_with_bias --n_adaptation 10 --pretrain_steps 2000 --adaptation_steps 3000 --output_dir results_cips_strainer_4
+python app/try_modinr_2d.py --image_size 1024 1024 --n_hidden_layers 2 --hidden_features 362 --lora_rank 9999 --mod_with_bias --n_adaptation 10 --pretrain_steps 2000 --adaptation_steps 3000 --output_dir results_cips_strainer_2
