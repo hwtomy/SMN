@@ -17,6 +17,11 @@ We propose the **Subtractive Modulative Network (SMN)**, a parameter-efficient I
 ```bash
 python inr_base/app/train.py
 
+
+
+##
 ### 3D NeRF Synthesis (e.g., Lego)
+
 ```bash
 python nerf/run_nerf.py --config configs/nerf_lego.txt
+
