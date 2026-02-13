@@ -74,9 +74,6 @@ class ModLinear(nn.Module):
         self.weight_magnitude = get_weight_magnitude(self.in_features, self.init_mode, self.nonlinearity)
 
         self.reset_parameters()
-        self.ca = ca
-        if self.ca:
-            self.calayer=(ChannelAttention(self.out_features, reduction=16))  
 
         
 

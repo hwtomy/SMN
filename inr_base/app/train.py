@@ -32,21 +32,20 @@ def parse_arguments():
 
     parser = argparse.ArgumentParser(description="Script for model training and adaptation.")
 
-    parser.add_argument("--image_size", type=int, nargs=2, default=(510,339),
+    parser.add_argument("--image_size", type=int, nargs=2, default=(768,512),
                         help="Size of the input images (width, height).")
     parser.add_argument("--device", type=str, default="cuda",
                         help="Device to use for computation (e.g., 'cuda' or 'cpu').")
-    parser.add_argument("--lr", type=float, default=1e-3, help="Learning rate.")#5e-2
+    parser.add_argument("--lr", type=float, default=1e-3, help="Learning rate.")#For SMN, please set around 1e-3 to 2e-2.
     parser.add_argument("--pretrain_steps", type=int, default=0, help="Number of pretraining steps.")
     parser.add_argument("--adaptation_steps", type=int, default=5000, help="Number of adaptation steps.")
     parser.add_argument("--n_pretrain", type=int, default=0, help="Number of pretraining steps.")
-    parser.add_argument("--n_adaptation", type=int, default=24, help="Number of adaptation steps.")
-    parser.add_argument("--n_samples_per_image", type=int, default=172890, help="Number of samples per image.")
+    parser.add_argument("--n_adaptation", type=int, default=24, help="Number of adaptation steps.")#This item is indeed the number of images in the target dataset
+    parser.add_argument("--n_samples_per_image", type=int, default=393216, help="Number of samples per image.")
     parser.add_argument("--hidden_features", type=int, default=256, help="Number of hidden features in the model.")
     parser.add_argument("--n_hidden_layers", type=int, default=2, help="Number of hidden layers in the model.")
     parser.add_argument("--lora_rank", type=int, nargs='+', default=0, help="Rank for LoRA layers.")
-    parser.add_argument("--inr_type", type=str, default="siren", help="INR type.")
-    parser.add_argument("--net_type", type=str, default="mlp", help="network type.")
+    parser.add_argument("--inr_type", type=str, default="siren", help="INR type.")#For SMN, please set to "siren".
     parser.add_argument("--mod_type", type=str, default="lora_vanilla", help="modulation type.")
     parser.add_argument("--pretrain_with_mod", action='store_true', help="Pretrain with modulation.")
     parser.add_argument("--mod_with_bias", action='store_true', help="Modulate with bias.")
@@ -167,7 +166,7 @@ def main(opt):
 
         n_params_base = sum([v.numel() for v in model.parameters()])
         print(f"# base model params: {n_params_base}")
-        optim = torch.optim.Adam(model.parameters(), lr=2e-2, betas=(0.9, 0.999))#2e-2
+        optim = torch.optim.Adam(model.parameters(), lr=opt.lr, betas=(0.9, 0.999))#2e-2
         psnr = run_optimization(model, adaptation_dl,  optim, opt.adaptation_steps, use_weight_norm=opt.weight_norm, use_amp=False, nuclear_norm_weight=opt.nuclear_norm_weight)
         all_psnrs.append(psnr)
 
@@ -176,7 +175,7 @@ def main(opt):
         os.makedirs(opt.output_dir, exist_ok=True)
         for j in range(opt.n_adaptation):
             with torch.no_grad():
-                query_coordinates = get_coordinate_grid(1, (768, 512), device=opt.device)
+                query_coordinates = get_coordinate_grid(1, opt.image_size, device=opt.device)
    
                 outputs = model(query_coordinates)
                 outputs = outputs.cpu()

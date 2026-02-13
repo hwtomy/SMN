@@ -143,37 +143,6 @@ class ModLinear(nn.Module):
 
         return output
 
-class ChannelAttention(nn.Module):
-    def __init__(self, channels, reduction=16, nonlinearity="sin", init_mode="normal", omega_0=1., scale_0=1.):
-        super().__init__()
-        self.avg_pool = nn.AdaptiveAvgPool1d(1)  
-
-        self.fc1 = ModLinear(channels, channels // reduction,
-                             nonlinearity="relu",
-                             init_mode=init_mode,
-                             omega_0=omega_0,
-                             scale_0=scale_0)
-
-        self.fc2 = ModLinear(channels // reduction, channels,
-                             nonlinearity="sigmoid",  
-                             init_mode=init_mode,
-                             omega_0=omega_0,
-                             scale_0=scale_0)
-
-    def forward(self, x, mod_params=None, verbose=False):
-        b, c, n = x.size()
-        y = self.avg_pool(x).view(b, c).T 
-
-        y = self.fc1(y)  
-        y = self.fc2(y)  
-
-        y = y.T.view(b, c, 1)  
-
-        return x * y
-
-
-
-
 
 
 class ChebychevInput(nn.Module):
@@ -272,7 +241,9 @@ class PE1(nn.Module):
             pe = torch.cat([x, pe], dim=1)
         return pe
 
-
+"""
+Now ModMLP is set as SMN. If it does not work, please try class INRN.
+"""
 class ModMLP(nn.Module):
 
     def __init__(self, in_features, out_features, hidden_features, n_hidden_layers,
@@ -377,8 +348,6 @@ class ModMLP(nn.Module):
         activation = []
         x = input
         j=len(self.layers)
-        # print(j)
-        # exit()
         k=0
         for i, layer in enumerate(self.layers):
 
@@ -405,11 +374,6 @@ class ModMLP(nn.Module):
             if self.maskcontrol and i==1:
                 x = x*x1
                
-
-
-
-  
-
             if intermediate_outputs and i<=j-1:
                 y = x
                 activation.append(y.reshape(x.shape[0], x.shape[1], *instance_shape))
@@ -428,10 +392,7 @@ class ModMLP(nn.Module):
         output = self.to_output_layer(x, mod_params=get_subdict(mod_params, f"to_output_layer."), verbose=verbose)
         output = self.output_gain * output.reshape(output.shape[0], output.shape[1], *instance_shape)
         return output.real
-        # if not intermediate_outputs:
-        #     return output.real
-        # else:
-        #     return output.real, activation
+
 
 
 """

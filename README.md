@@ -3,7 +3,7 @@
 Official implementation of **“Subtractive Modulative Network with Learnable Periodic Activations”** (IEEE ICASSP 2026).
 
 ## Resources
-- **Paper (PDF)**: `docs/SMN_2601.pdf` :contentReference[oaicite:0]{index=0}
+- **Paper (PDF)**: `docs/SMN_2601.pdf` 
 - **Project Page**: https://inrainbws.github.io/smn/
 - **Supplementary Materials**: https://inrainbws.github.io/smn/
 - **ICASSP 2026 Accepted Papers** (search by title): https://cmsworkshops.com/ICASSP2026/papers/accepted_papers.php
@@ -17,11 +17,14 @@ We propose the **Subtractive Modulative Network (SMN)**, a parameter-efficient I
 ```bash
 python inr_base/app/train.py
 
+```
 
-
-##
 ### 3D NeRF Synthesis (e.g., Lego)
 
 ```bash
 python nerf/run_nerf.py --config configs/nerf_lego.txt
+```
+
+
+
 
