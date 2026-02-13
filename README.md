@@ -9,7 +9,7 @@ Official implementation of **“Subtractive Modulative Network with Learnable Pe
 - **ICASSP 2026 Accepted Papers** (search by title): https://cmsworkshops.com/ICASSP2026/papers/accepted_papers.php
 
 ## Abstract
-We propose the **Subtractive Modulative Network (SMN)**, a parameter-efficient Implicit Neural Representation (INR) architecture inspired by **subtractive synthesis**. SMN is structured as a signal-processing pipeline with (i) an **Oscillator**—a learnable periodic activation layer that generates a multi-frequency basis—and (ii) **Filters**—modulative mask modules that generate high-order harmonics. We provide theoretical analysis and empirical validation, achieving **40+ dB PSNR** on two image datasets and showing consistent advantages on **3D NeRF novel view synthesis**. :contentReference[oaicite:1]{index=1}
+We propose the **Subtractive Modulative Network (SMN)**, a parameter-efficient Implicit Neural Representation (INR) architecture inspired by **subtractive synthesis**. SMN is structured as a signal-processing pipeline with (i) an **Oscillator**—a learnable periodic activation layer that generates a multi-frequency basis—and (ii) **Filters**—modulative mask modules that generate high-order harmonics. We provide theoretical analysis and empirical validation, achieving **40+ dB PSNR** on two image datasets and showing consistent advantages on **3D NeRF novel view synthesis**.
 
 ## Quick Start
 
